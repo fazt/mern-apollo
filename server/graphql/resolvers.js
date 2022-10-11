@@ -26,7 +26,20 @@ export const resolvers = {
 			const savedProject = project.save();
 			return savedProject;
 		},
-		// other project mutations, update, delete
+		deleteProject: async (_, { _id }) => {
+			const deletedProject = await Project.findByIdAndDelete(_id);
+			if (!deletedProject) throw new Error("Project not found");
+			return deletedProject;
+		},
+		updateProject: async (_, args) => {
+			const updatedProject = await Project.findByIdAndUpdate(
+				args._id,
+				args,
+				{ new: true }
+			);
+			if (!updatedProject) throw new Error("Project not found");
+			return updatedProject;
+		},
 		createTask: async (_, { title, projectId }) => {
 			const projectFound = await Project.findById(projectId);
 			if (!projectFound) {
@@ -40,6 +53,27 @@ export const resolvers = {
 			const savedTask = task.save();
 			return savedTask;
 		},
-		// other tasks mutations, update, delete
+		deleteTask: async (_, { _id }) => {
+			const deletedTask = await Task.findByIdAndDelete(_id);
+			if (!deletedTask) throw new Error("Task not found");
+			return deletedTask;
+		},
+		updateTask: async (_, args) => {
+			const updatedTask = await Task.findByIdAndUpdate(args._id, args, {
+				new: true,
+			});
+			if (!updatedTask) throw new Error("Task not found");
+			return updatedTask;
+		}
 	},
+	Project: {
+		tasks: async (parent) => {
+			return await Task.find({ projectId: parent._id });
+		}
+	},
+	Task: {
+		project: async (parent) => {
+			return await Project.findById(parent.projectId);
+		}
+	}
 };
