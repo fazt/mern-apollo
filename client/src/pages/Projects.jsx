@@ -1,32 +1,14 @@
-import { useQuery, gql } from "@apollo/client";
-import ProjectCard from "../components/ProjectCard";
 import ProjectForm from "../components/ProjectForm";
+import ProjectList from "../components/ProjectList";
 
-export const GET_PROJECTS = gql`
-	query getProjects {
-		projects {
-			_id
-			name
-			description
-		}
-	}
-`;
-
-const Projects = () => {
-	const { loading, error, data } = useQuery(GET_PROJECTS);
-
-	if (loading) return <p>Loading...</p>;
-	if (error) return <p>Error :(</p>;
-
-	return (
-		<div className="bg-zinc-900 max-w-4xl rounded-lg shadow-lg p-4">
-			<h1>Projects</h1>
+const Projects = () => (
+	<div className="bg-zinc-900 rounded-lg shadow-lg p-8 h-4/5 w-3/5">
+		<h1 className="text-2xl font-bold py-2">Projects</h1>
+		<div className="flex justify-between gap-x-1">
 			<ProjectForm />
-			{data.projects.map((project) => (
-				<ProjectCard key={project._id} project={project} />
-			))}
+			<ProjectList />
 		</div>
-	);
-};
+	</div>
+);
 
 export default Projects;
