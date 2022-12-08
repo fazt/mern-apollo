@@ -43,10 +43,9 @@ const Tasks = () => {
 					<p>{data.project.description}</p>
 				</div>
 				<div>
-					<button onClick={handleDelete}>
+					<button onClick={handleDelete} className="bg-red-500 px-3 py-2">
 						{deleting ? "Deleting..." : "Delete"}
 					</button>
-					<button>Edit</button>
 				</div>
 			</div>
 
