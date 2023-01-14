@@ -4,7 +4,7 @@ import TaskForm from "../components/tasks/TaskForm";
 import TasksList from "../components/tasks/TasksList";
 import { DELETE_PROJECT, GET_PROJECT } from "../graphql/projects";
 
-const Tasks = () => {
+const ProjectDetails = () => {
 	const params = useParams();
 	const { data, loading, error } = useQuery(GET_PROJECT, {
 		variables: {
@@ -61,4 +61,4 @@ const Tasks = () => {
 	);
 };
 
-export default Tasks;
+export default ProjectDetails;
